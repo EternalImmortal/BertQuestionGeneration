@@ -71,7 +71,7 @@ dropout = 0.5
 
 # training parameters
 epochs = 4
-mb = 32
+mb = 64
 dl_workers = 0
 checkpoint = None
 encoder_trained = False

@@ -1,6 +1,15 @@
 import logging
-logging.getLogger('transformers').setLevel(logging.WARNING)
-log = logging.getLogger(__name__)
+
+logging.basicConfig(format='%(asctime)s - [line:%(lineno)d] - %(levelname)s: %(message)s',
+                    level=logging.DEBUG, filename='main.log', filemode='a')
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG)
+console.setFormatter(logging.Formatter('%(asctime)s - [line:%(lineno)d] - %(levelname)s: %(message)s'))
+log = logging.getLogger('').addHandler(console)
+
+
+# logging.getLogger('transformers').setLevel(logging.INFO)
+# log = logging.getLogger(__name__)
 
 import time
 import math
