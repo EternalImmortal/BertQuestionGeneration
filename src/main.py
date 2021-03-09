@@ -7,7 +7,6 @@ console.setLevel(logging.DEBUG)
 console.setFormatter(logging.Formatter('%(asctime)s - [line:%(lineno)d] - %(levelname)s: %(message)s'))
 log = logging.getLogger('').addHandler(console)
 
-
 # logging.getLogger('transformers').setLevel(logging.INFO)
 # log = logging.getLogger(__name__)
 
@@ -52,7 +51,6 @@ if __name__ == '__main__':
                       dropout, attention, device)
     encoder = BertModel.from_pretrained(model_path / stage / bert_model)
 
-
     model = Seq2Seq(encoder, decoder, device, encoder_trained)
 
     optimizer = optim.SGD(decoder.parameters(), weight_decay=weight_decay, lr=lr, momentum=momentum)
@@ -78,11 +76,10 @@ if __name__ == '__main__':
 
     model.to(device)
 
-
     for epoch in range(last_epoch, epochs):
         start_time = time.time()
 
-        log.info(f'Epoch {epoch+1} training')
+        log.info(f'Epoch {epoch + 1} training')
         train_loss = train(model, device, training_loader, optimizer, criterion, clip)
         log.info(f'\nEpoch {epoch + 1} validation')
         valid_loss, bleu_score = eval(model, device, valid_loader, criterion)
@@ -96,8 +93,10 @@ if __name__ == '__main__':
 
         #     if valid_loss < best_valid_loss:
         #         best_valid_loss = valid_loss
-        save_checkpoint(model_path / stage /f'decoder/model0epoch{epoch}', epoch, model, optimizer, valid_loss_list, train_loss_list)
+        save_checkpoint(model_path / stage / f'decoder/model0epoch{epoch}', epoch, model, optimizer, valid_loss_list,
+                        train_loss_list)
 
         log.info(f'\nEpoch: {epoch + 1:02} completed | Time: {epoch_mins}m {epoch_secs}s')
         log.info(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
-        log.info(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f} | Val. BLEU {bleu_score}\n\n')
+        log.info(
+            f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f} | Val. BLEU {bleu_score}\n\n')

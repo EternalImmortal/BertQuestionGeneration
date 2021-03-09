@@ -1,4 +1,5 @@
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 import json
@@ -55,11 +56,11 @@ with (model_path / stage / bert_model / 'config.json').open('r') as f:
     bert_hidden_size = conf['hidden_size']
     bert_vocab_size = conf['vocab_size']
 
-#optimizer
+# optimizer
 weight_decay = 0.001
-betas = (0.9, 0.999) # only for Adam
+betas = (0.9, 0.999)  # only for Adam
 lr = 0.05
-momentum = 0.9 # only for SGD
+momentum = 0.9  # only for SGD
 
 # decoder parameter
 decoder_hidden_size = 512

@@ -8,6 +8,7 @@ from .utils import epoch_time
 
 pw_criterion = nn.CrossEntropyLoss(ignore_index=0)  # Pad Index
 
+
 def train(model, device, dataloader, optimizer, criterion, clip):
     log = logging.getLogger(__name__)
     model.train()
@@ -22,7 +23,7 @@ def train(model, device, dataloader, optimizer, criterion, clip):
 
         optimizer.zero_grad()
 
-        prediction = model([x.to(device) for x in input_data],  output_data.to(device))
+        prediction = model([x.to(device) for x in input_data], output_data.to(device))
 
         trg_sent_len = prediction.size(1)
 
@@ -30,9 +31,9 @@ def train(model, device, dataloader, optimizer, criterion, clip):
         output_data = output_data[:, 1:].contiguous().view(-1)  # Find a way to avoid calling contiguous
 
         with torch.no_grad():
-            pw_loss = pw_criterion(prediction,  output_data.to(device))
+            pw_loss = pw_criterion(prediction, output_data.to(device))
 
-        loss = criterion(prediction,  output_data.to(device))
+        loss = criterion(prediction, output_data.to(device))
 
         # reshape to [trg sent len - 1, batch size]
         loss = loss.view(-1, trg_sent_len - 1)
